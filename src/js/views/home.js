@@ -8,11 +8,10 @@ export const Home = () => {
 const {store, actions} = useContext(Context)
 
 	return (
-		<>
+		<div style={{ backgroundColor: '#0d1117' }}>
 		{/* <h1>qwerty</h1> */}
 			<Navbar /> 
-			<div className="container-fluid">
-            	<h1 className="text-danger mb-2">Characters</h1>
+			<div className="container">
 				<Cartas/>
 			</div>
 				{/* <div className="d-flex flex-row justify-content-center">
@@ -22,7 +21,7 @@ const {store, actions} = useContext(Context)
 					)}
 				</div>  */}
 			{/* <Footer /> */}
-		</>
+		</div>
 
 	)
 };
