@@ -17,10 +17,10 @@ export const Navbar = () => {
                     <button className="btn dropdown-toggle" style={{ backgroundColor: '#5a23c8' ,color: 'white'}} type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         Favorites <span className="badge bg-secondary">{store.favoriteList.length}</span>
                     </button>
-                    <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton" style={{ backgroundColor: '#5a23c8' ,color: 'white',width: '200px'  }}>
+                    <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton" style={{ backgroundColor: '#5a23c8' ,color: 'white',width: '240px'  }}>
                         {
                             store.favoriteList.map((item, index) => {
-                                return (<li key={item.id} className="dropdown-item" style={{ color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 12px' }}>
+                                return (<li key={item.id} className="dropdown-item" style={{ color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 4px' }}>
       <span>{item.name}</span>
       <button 
         onClick={() => actions.deleteFavorite(item)}
@@ -38,61 +38,3 @@ export const Navbar = () => {
         </nav>
     );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React from "react";
-// import { Link } from "react-router-dom";
-
-// export const Navbar = () => {
-// 	return (
-// 		<nav className="navbar navbar-light bg-dark mb-3">
-// 			<Link to="/">
-// 				<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-// 			</Link>
-// 			<div className="ml-auto">
-// 				<Link to="/demo">
-// 					<button className="btn btn-primary">Favorite</button>
-// 				</Link>
-// 			</div>
-// 		</nav>
-// 	);
-// };

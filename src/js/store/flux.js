@@ -4,21 +4,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 		favoriteList: [],
 		personajes: [],
 		planets: [],
+		vehicles: [],
 	  },
 	  actions: {
 		AddOrDeleteFavorite: (item) => {
 		  let store = getStore();
-		  let exists = store.favoriteList.some(fav => fav.uid === item.uid);
+		  // Create a unique identifier by combining the item type and uid
+		  const uniqueId = `${item.type}_${item.uid}`;
+		  let exists = store.favoriteList.some(fav => `${fav.type}_${fav.uid}` === uniqueId);
 		  if (exists) {
-			let updatedList = store.favoriteList.filter(fav => fav.uid !== item.uid);
+			let updatedList = store.favoriteList.filter(fav => `${fav.type}_${fav.uid}` !== uniqueId);
 			setStore({ favoriteList: updatedList });
 		  } else {
-			setStore({ favoriteList: [...store.favoriteList, item] });
+			setStore({ favoriteList: [...store.favoriteList, { ...item, uniqueId }] });
 		  }
 		},
 		deleteFavorite: (item) => {
 		  const store = getStore();
-		  let updatedList = store.favoriteList.filter(fav => fav.uid !== item.uid);
+		  const uniqueId = `${item.type}_${item.uid}`;
+		  let updatedList = store.favoriteList.filter(fav => `${fav.type}_${fav.uid}` !== uniqueId);
 		  setStore({ favoriteList: updatedList });
 		},
 		getPeople: async () => {
@@ -31,7 +35,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const detailData = await detailRes.json();
 				return {
 				  ...person,
-				  ...detailData.result.properties
+				  ...detailData.result.properties,
+				  type: 'character' // Add a type field
 				};
 			  })
 			);
@@ -50,11 +55,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const detailData = await detailRes.json();
 				return {
 				  ...planet,
-				  ...detailData.result.properties
+				  ...detailData.result.properties,
+				  type: 'planet' // Add a type field
 				};
 			  })
 			);
 			setStore({ planets: detailedPlanets });
+		  } catch (err) {
+			console.error(err);
+		  }
+		},
+		getVehicles: async () => {
+		  try {
+			const res = await fetch("https://www.swapi.tech/api/vehicles");
+			const data = await res.json();
+			const detailedVehicles = await Promise.all(
+			  data.results.map(async (vehicle) => {
+				const detailRes = await fetch(vehicle.url);
+				const detailData = await detailRes.json();
+				return {
+				  ...vehicle,
+				  ...detailData.result.properties,
+				  type: 'vehicle' // Add a type field
+				};
+			  })
+			);
+			setStore({ vehicles: detailedVehicles });
 		  } catch (err) {
 			console.error(err);
 		  }
