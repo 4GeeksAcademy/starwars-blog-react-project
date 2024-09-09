@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	  actions: {
 		AddOrDeleteFavorite: (item) => {
 		  let store = getStore();
-		  // Create a unique identifier by combining the item type and uid
+		  // item type and uid
 		  const uniqueId = `${item.type}_${item.uid}`;
 		  let exists = store.favoriteList.some(fav => `${fav.type}_${fav.uid}` === uniqueId);
 		  if (exists) {
@@ -36,7 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return {
 				  ...person,
 				  ...detailData.result.properties,
-				  type: 'character' // Add a type field
+				  type: 'character' 
 				};
 			  })
 			);
@@ -56,7 +56,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return {
 				  ...planet,
 				  ...detailData.result.properties,
-				  type: 'planet' // Add a type field
+				  type: 'planet' 
 				};
 			  })
 			);
@@ -76,7 +76,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return {
 				  ...vehicle,
 				  ...detailData.result.properties,
-				  type: 'vehicle' // Add a type field
+				  type: 'vehicle'
 				};
 			  })
 			);
@@ -85,6 +85,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 			console.error(err);
 		  }
 		},
+		getPlanetDetails: async (id) => {
+			try {
+			  const res = await fetch(`https://www.swapi.tech/api/planets/${id}`);
+			  const data = await res.json();
+			  return data.result.properties;
+			} catch (err) {
+			  console.error(err);
+			}
+		  },
+		
 	  }
 	};
   };

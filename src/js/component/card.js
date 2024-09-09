@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Cartas = (props) => {
@@ -17,16 +18,13 @@ export const Cartas = (props) => {
   const renderCard = (item, type) => (
     <div className="col-12 col-md-4 col-lg-3 mx-1" key={`${type}_${item.uid}`}>
       <div className="card" style={{ backgroundColor: '#0d1117', color: 'white' }}>
-        <img src={`https://starwars-visualguide.com/assets/img/${type}s/${item.uid}.jpg`} className="card-img-top" alt="..." style={{ height: "260px", objectFit: "cover" }} />
+        <img src={`https://starwars-visualguide.com/assets/img/${type}s/${item.uid}.jpg`} 
+             className="card-img-top" alt="..." 
+             style={{ height: "260px", objectFit: "cover" }} 
+             onError={(e) => {e.target.onerror = null; e.target.src="https://via.placeholder.com/400x400?text=Image+Not+Available"}}
+        />
         <div className="card-body px-2 py-2 fw-semibold">
           <h5 className="card-title">{item.name}</h5>
-          {type === 'character' && (
-            <>
-              <p className="card-text mb-1">Gender: {item.gender}</p>
-              <p className="card-text mb-1">Hair Color: {item.hair_color}</p>
-              <p className="card-text mb-3">Eye-Color: {item.eye_color}</p>
-            </>
-          )}
           {type === 'planet' && (
             <>
               <p className="card-text mb-1">Population: {item.population}</p>
@@ -36,11 +34,18 @@ export const Cartas = (props) => {
           {type === 'vehicle' && (
             <>
               <p className="card-text mb-1">Speed: {item.max_atmosphering_speed}km/h</p>
-              <p className="card-text mb-3">Class: {item.vehicle_class}</p>
+              <p className="card-text mb-3">Passengers: {item.passengers}</p>
+            </>
+          )}
+          {type === 'character' && (
+            <>
+              <p className="card-text mb-1">Gender: {item.gender}</p>
+              <p className="card-text mb-1">Hair Color: {item.hair_color}</p>
+              <p className="card-text mb-3">Eye-Color: {item.eye_color}</p>
             </>
           )}
           <div className="d-flex justify-content-between">
-            <a href="#" className="btn btn-outline-primary fw-bold">Learn more!</a>
+            <Link to={`/${type}_details/${item.uid}`} className="btn btn-outline-primary fw-bold">Learn more!</Link>
             <button 
               onClick={() => actions.AddOrDeleteFavorite({...item, type})} 
               className="btn btn-outline-warning"

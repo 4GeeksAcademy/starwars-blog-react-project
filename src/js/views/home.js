@@ -2,7 +2,7 @@ import React, { useContext} from "react"; //useEffect
 import { Cartas } from "../component/card";
 import { Context } from "../store/appContext";
 import { Navbar } from "../component/navbar";
-
+import { Footer } from "../component/footer";
 export const Home = () => {
 	// store:propiedades actions:funciones
 const {store, actions} = useContext(Context)
@@ -20,7 +20,7 @@ const {store, actions} = useContext(Context)
 						<Cartas key={index} personajes={item} />
 					)}
 				</div>  */}
-			{/* <Footer /> */}
+			<Footer />
 		</div>
 
 	)
